@@ -273,7 +273,7 @@ $users = User::filter(['role' => 'admin'])
 
 ### 8. **Chaining**
 
-The filter returns a query builder proxy, so you can chain additional methods:
+The filter returns a query builder proxy, so you can chain additional methods from your Custom Filter Class:
 
 ```php
 $users = User::filter([
@@ -331,3 +331,9 @@ $users = User::filter([
 ### License
 
 MIT License.
+
+---
+
+### Contributing
+
+We welcome contributions from everyone! If you have ideas, bug fixes, or improvements, feel free to open an issue or submit a pull request. Whether it’s enhancing filters, adding new features, or improving documentation, your contributions are highly appreciated.
