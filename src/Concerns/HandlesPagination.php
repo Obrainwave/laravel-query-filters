@@ -8,14 +8,14 @@ trait HandlesPagination
     {
         // URL query param overrides everything
         $requestPerPage = $this->filters['per_page'] ?? null;
-        $perPage        = $requestPerPage ?? $perPage ?? config('query-filters.pagination.per_page', 15);
+        $perPage = $requestPerPage ?? $perPage ?? config('query-filters.pagination.per_page', 15);
 
         $maxPerPage = (int) config('query-filters.pagination.max_per_page', 100);
-        $perPage    = min((int) $perPage, $maxPerPage);
+        $perPage = min((int) $perPage, $maxPerPage);
 
         // Page parameter precedence: URL → method → default 1
         $requestPage = $this->filters['page'] ?? null;
-        $page        = $requestPage ?? $page ?? 1;
+        $page = $requestPage ?? $page ?? 1;
 
         return [(int) $perPage, (int) $page];
     }
