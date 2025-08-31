@@ -1,94 +1,180 @@
-# :package_description
+# Laravel Query Filters
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
+A lightweight Laravel package to apply filters, global search, and relationship filters to your Eloquent queries. Supports Laravel 9–12.
+
 ---
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
-
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
-You can install the package via composer:
+```bash
+composer require obrainwave/laravel-query-filters
+```
+
+Publish the configuration:
 
 ```bash
-composer require :vendor_slug/:package_slug
+php artisan vendor:publish --provider="Obrainwave\LaravelQueryFilters\LaravelQueryFiltersServiceProvider" --tag="config"
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
+---
 
 ## Usage
 
+### 1. Simple Filtering
+
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+use Obrainwave\LaravelQueryFilters\QueryFilters;
+use App\Models\User;
+
+// Apply filters from request or array
+$users = QueryFilters::applyFilter(
+    UserFilter::class,   // Your custom filter class
+    request(),           // Request or array of filters
+    User::query()        // Eloquent builder
+)->paginate();
 ```
 
-## Testing
+---
+
+### 2. Relationship Filtering
+
+Filter on nested relationships using dot notation:
+
+```php
+$users = User::filter([
+    'posts.comments.title' => request('title'),
+    'or:posts.comments.body' => request('body'),
+])->with(['posts.comments'])->paginate();
+```
+
+**Notes:**
+
+- Supports `or:` prefix for OR logic.
+- Supports arrays of values.
+- Supports operators like `gt`, `lt`, `between`, `like`, etc.
+- Nested OR (`posts.or:comments`) is planned for future versions.
+
+---
+
+### 3. Pagination
+
+Pagination works with these sources in order:
+
+1. URL query parameter (`?per_page=5`)
+2. Passed as argument to `paginate($perPage)`
+3. Default config (`config('query-filters.pagination.per_page')`)
+
+Example:
+
+```php
+$users = User::filter(request())->paginate(); // follows per_page precedence
+```
+
+---
+
+### 4. Global Search
+
+Global search is enabled by default using `q` parameter:
+
+```php
+$users = User::filter(['q' => 'john'])->get();
+```
+
+You can change the key in config:
+
+```php
+'global_key' => 'search',
+```
+
+---
+
+### 5. Operators
+
+Supports operator filters:
+
+```php
+$users = User::filter([
+    'age' => ['gt' => 18],
+    'created_at' => ['between' => ['2023-01-01', '2023-12-31']]
+])->get();
+```
+
+Config:
+
+```php
+'operators' => [
+    'enabled' => true
+]
+```
+
+---
+
+### 6. Generating a Custom Filter Class
 
 ```bash
-composer test
+php artisan make:filter UserFilter
 ```
 
-## Changelog
+Example:
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+```php
+namespace App\Filters;
 
-## Contributing
+use Obrainwave\LaravelQueryFilters\QueryFilter;
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+class UserFilter extends QueryFilter
+{
+    public function role($value)
+    {
+        $this->builder->where('role', $value);
+        return $this;
+    }
 
-## Security Vulnerabilities
+    public function status($value)
+    {
+        $this->builder->where('status', $value);
+        return $this;
+    }
+}
+```
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Apply it:
 
-## Credits
+```php
+$users = QueryFilters::applyFilter(UserFilter::class, request(), User::query())->paginate();
+```
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+---
 
-## License
+### 7. Notes
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-# laravel-query-filters
+- `->sort()` is not implemented yet. Sorting will follow config defaults if needed.  
+- Supports Laravel 9–12.  
+- Works with PHP 8.0+.  
+
+---
+
+### 8. Configuration
+
+`config/query-filters.php`
+
+```php
+return [
+    'global_key'      => 'q',       // Query param for global search
+    'allowed_filters' => ['status','role','email','created_at'],
+    'default_match'   => 'exact',   // exact | like | strict
+    'filter_modes'    => [],
+    'pagination' => [
+        'per_page'    => 15,
+        'max_per_page'=> 100,
+    ],
+    'sorting' => [
+        'allowed_columns' => [],
+        'default' => null,
+    ],
+    'operators' => [
+        'enabled' => true,
+    ],
+];
+```
+
