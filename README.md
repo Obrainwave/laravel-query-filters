@@ -64,7 +64,7 @@ return [
 
 ## Basic Usage
 
-You can filter Eloquent models directly using the `filter()` scope.
+You can filter Eloquent models directly using the `filter()` scope. You can use all laravel 
 
 ```php
 use App\Models\User;
@@ -101,6 +101,24 @@ use App\Models\User;
 
 $users = User::filter(request())->paginate(); // Supports per_page from request or config
 ```
+---
+
+### Using Laravel Query Methods
+
+After applying filters with the package, you can continue to use all standard Laravel query builder and Eloquent methods. For example:
+
+```php
+$users = User::filter($filters)->get();
+$users = User::filter($filters)->paginate(15);
+$users = User::filter($filters)->simplePaginate(10);
+$user  = User::filter($filters)->first();
+```
+->get() → retrieves all matching records.
+->paginate() → retrieves paginated results with page links.
+->simplePaginate() → retrieves simpler pagination without total count.
+->first() → retrieves the first matching record.
+
+This allows you to combine filtering with any Laravel query workflow seamlessly.
 
 ---
 
