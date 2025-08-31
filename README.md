@@ -108,7 +108,7 @@ $users = User::filter([
 If you know what you are doing, you can probably just leave $allowedFilters as public property
 
 ```php
-protected array $allowedFilters = ['status', 'name', 'role'];
+public array $allowedFilters = ['status', 'name', 'role'];
 ```
 
 And also supports laravel paginate and simplePaginate
