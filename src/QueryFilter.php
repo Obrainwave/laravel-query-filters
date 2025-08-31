@@ -32,7 +32,7 @@ abstract class QueryFilter
     public function __construct(Request | array | null $filters = null)
     {
         if ($filters instanceof Request) {
-            $this->request = $filters; 
+            $this->request = $filters;
             $this->filters = $filters->all();
         } elseif (is_array($filters)) {
             $this->filters = $filters;
@@ -105,8 +105,6 @@ abstract class QueryFilter
             if ($this->isAllowedFilter($key, $allowed)) {
                 $this->applyCaseInsensitiveToBuilder($key, $value);
             }
-
-            // $this->applySorting();
         }
 
         $this->applySorting();

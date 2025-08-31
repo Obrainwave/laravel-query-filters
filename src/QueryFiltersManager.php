@@ -15,10 +15,4 @@ class QueryFiltersManager
 
         return $query;
     }
-
-    // Example filter method
-    protected function status(Builder $query, $value)
-    {
-        return $query->where('status', $value);
-    }
 }

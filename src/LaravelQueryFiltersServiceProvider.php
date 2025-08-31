@@ -1,10 +1,9 @@
 <?php
-
 namespace Obrainwave\LaravelQueryFilters;
 
+use Obrainwave\LaravelQueryFilters\Commands\MakeFilterCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Obrainwave\LaravelQueryFilters\Commands\MakeFilterCommand;
 
 class LaravelQueryFiltersServiceProvider extends PackageServiceProvider
 {
@@ -13,12 +12,8 @@ class LaravelQueryFiltersServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-query-filters')
             ->hasConfigFile('query-filters')
-            // If you don’t need views yet, you can remove this:
-            // ->hasViews()
-            // If you don’t need a migration yet, you can remove this:
-            // ->hasMigration('create_query_filters_table')
             ->hasCommand(MakeFilterCommand::class);
-        ;
+
     }
 
     public function registeringPackage()
@@ -29,4 +24,3 @@ class LaravelQueryFiltersServiceProvider extends PackageServiceProvider
         });
     }
 }
-
