@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters;
 
 use Illuminate\Database\Eloquent\Builder;

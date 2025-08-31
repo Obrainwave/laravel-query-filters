@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters;
 
 use Obrainwave\LaravelQueryFilters\Commands\MakeFilterCommand;
@@ -20,7 +21,7 @@ class LaravelQueryFiltersServiceProvider extends PackageServiceProvider
     {
         // Bind your core service into the container
         $this->app->singleton('query-filters', function () {
-            return new QueryFiltersManager();
+            return new QueryFiltersManager;
         });
     }
 }
