@@ -1,47 +1,43 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "obrainwave/laravel-query-filters",
+    "description": "A lightweight Laravel search and filter package with global search, aliases, and relationship filtering.",
     "keywords": [
-        ":vendor_name",
+        "obrainwave",
         "laravel",
-        ":package_slug"
+        "laravel-query-filters"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/obrainwave/laravel-query-filters",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Akeem Olaiwola Salau",
+            "email": "olaiwolaakeem@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.4",
+        "php": "^8.0",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.14",
-        "nunomaduro/collision": "^8.8",
+        "orchestra/testbench": "^9.0.0||^10.0.0",
         "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^10.0.0||^9.0.0",
-        "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-arch": "^4.0",
-        "pestphp/pest-plugin-laravel": "^4.0",
+        "laravel/pint": "^1.14",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^11.5",
         "spatie/laravel-ray": "^1.35"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Obrainwave\\LaravelQueryFilters\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Obrainwave\\LaravelQueryFilters\\Tests\\": "tests",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,10 +59,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Obrainwave\\LaravelQueryFilters\\LaravelQueryFiltersServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "QueryFilter": "Obrainwave\\LaravelQueryFilters\\Facades\\QueryFilter"
             }
         }
     },

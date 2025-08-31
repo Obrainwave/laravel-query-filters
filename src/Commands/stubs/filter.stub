@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+use Obrainwave\LaravelQueryFilters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
+
+class DummyClass extends QueryFilter
+{
+    // {{ methods }}
+}
