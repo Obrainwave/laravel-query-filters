@@ -95,8 +95,8 @@ return [
     |
     */
     'pagination' => [
-        'per_page'    => 1,   // default items per page
-        'max_per_page'=> 100, // maximum items allowed per page
+        'per_page' => 1,   // default items per page
+        'max_per_page' => 100, // maximum items allowed per page
     ],
 
     /*
@@ -115,7 +115,7 @@ return [
     */
     'sorting' => [
         'allowed_columns' => [], // empty = all allowed
-        'default'         => null, // e.g., 'created_at' or '-created_at'
+        'default' => null, // e.g., 'created_at' or '-created_at'
     ],
 
     /*

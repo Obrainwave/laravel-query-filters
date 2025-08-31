@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 // trait HandlesPagination
@@ -40,7 +41,7 @@ namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesPagination
 {
-    protected function applyPaginationParams(int $perPage = null, int $page = null): array
+    protected function applyPaginationParams(?int $perPage = null, ?int $page = null): array
     {
         // URL query param overrides everything
         $requestPerPage = $this->filters['per_page'] ?? null;
@@ -57,10 +58,10 @@ trait HandlesPagination
     }
 
     public function paginate(
-        int $perPage = null,
+        ?int $perPage = null,
         array $columns = ['*'],
         string $pageName = 'page',
-        int $page = null
+        ?int $page = null
     ) {
         [$perPage, $page] = $this->applyPaginationParams($perPage, $page);
 
@@ -68,14 +69,13 @@ trait HandlesPagination
     }
 
     public function simplePaginate(
-        int $perPage = null,
+        ?int $perPage = null,
         array $columns = ['*'],
         string $pageName = 'page',
-        int $page = null
+        ?int $page = null
     ) {
         [$perPage, $page] = $this->applyPaginationParams($perPage, $page);
 
         return $this->builder->simplePaginate($perPage, $columns, $pageName, $page);
     }
 }
-

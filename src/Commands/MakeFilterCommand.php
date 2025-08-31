@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Commands;
 
 use Illuminate\Console\GeneratorCommand;
@@ -7,18 +8,20 @@ use Illuminate\Support\Str;
 
 class MakeFilterCommand extends GeneratorCommand
 {
-    protected $name        = 'make:filter';
+    protected $name = 'make:filter';
+
     protected $description = 'Create a new query filter class';
-    protected $type        = 'Filter';
+
+    protected $type = 'Filter';
 
     protected function getStub()
     {
-        return __DIR__ . '/stubs/filter.stub';
+        return __DIR__.'/stubs/filter.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\\Filters';
+        return $rootNamespace.'\\Filters';
     }
 
     public function handle()
@@ -34,8 +37,8 @@ class MakeFilterCommand extends GeneratorCommand
     protected function guessModel(): ?string
     {
         $filterClass = $this->getNameInput();
-        $modelName   = Str::before($filterClass, 'Filter');
-        $modelClass  = "App\\Models\\{$modelName}";
+        $modelName = Str::before($filterClass, 'Filter');
+        $modelClass = "App\\Models\\{$modelName}";
 
         return class_exists($modelClass) ? $modelClass : null;
     }
@@ -43,7 +46,7 @@ class MakeFilterCommand extends GeneratorCommand
     protected function addFilterMethods(string $model)
     {
         $instance = new $model;
-        $table    = $instance->getTable();
+        $table = $instance->getTable();
 
         // Allowed filters: model property or config
         $allowed = property_exists($instance, 'allowedFilters')
@@ -54,10 +57,10 @@ class MakeFilterCommand extends GeneratorCommand
         $fields = $instance->getFillable();
         if (empty($fields)) {
             $allColumns = Schema::getColumnListing($table);
-            $fields     = array_diff($allColumns, $instance->getGuarded());
+            $fields = array_diff($allColumns, $instance->getGuarded());
         }
 
-        $path     = $this->getPath($this->qualifyClass($this->getNameInput()));
+        $path = $this->getPath($this->qualifyClass($this->getNameInput()));
         $contents = file_get_contents($path);
 
         // Extract existing method names to avoid duplicates
@@ -88,7 +91,7 @@ class MakeFilterCommand extends GeneratorCommand
 
         // Insert methods before the last closing brace of the class
         if (! empty($methods)) {
-            $contents = preg_replace('/}\s*$/', $methods . "\n}", $contents);
+            $contents = preg_replace('/}\s*$/', $methods."\n}", $contents);
             file_put_contents($path, $contents);
             $this->info("Added filter methods for [$model].");
         } else {

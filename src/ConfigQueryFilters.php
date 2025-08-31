@@ -9,13 +9,15 @@ use Illuminate\Support\Str;
 class ConfigQueryFilters
 {
     protected Builder $builder;
+
     protected Request $request;
+
     protected array $filters;
 
     public function __construct(Request $request, string $model)
     {
         $this->request = $request;
-        $this->filters = config("query-filters." . Str::lower(class_basename($model)), []);
+        $this->filters = config('query-filters.'.Str::lower(class_basename($model)), []);
     }
 
     public function apply(Builder $builder): Builder

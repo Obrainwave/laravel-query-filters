@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Facades;
 
 use Illuminate\Support\Facades\Facade;

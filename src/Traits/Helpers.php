@@ -1,23 +1,23 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
 trait Helpers
 {
-
     protected function applyCaseInsensitiveToBuilder(string $column, $value, string $boolean = 'and', ?Builder $builder = null): void
     {
         $targetBuilder = $builder ?? $this->builder;
 
         $driver = $targetBuilder->getConnection()->getDriverName();
-        $mode   = $this->resolveFilterMode($column);
+        $mode = $this->resolveFilterMode($column);
 
         $apply = function ($q, $col, $val, $bool) use ($driver, $mode) {
             switch ($mode) {
                 case 'like':
                     $operator = ($driver === 'pgsql') ? 'ILIKE' : 'LIKE';
-                    $val      = ($driver === 'pgsql') ? "%{$val}%" : '%' . strtolower($val) . '%';
+                    $val = ($driver === 'pgsql') ? "%{$val}%" : '%'.strtolower($val).'%';
 
                     if ($driver !== 'pgsql') {
                         $q->whereRaw("LOWER($col) $operator ?", [$val], $bool);
@@ -31,7 +31,7 @@ trait Helpers
                 case 'exact':
                 default:
                     $operator = ($driver === 'pgsql') ? 'ILIKE' : '=';
-                    $val      = ($driver === 'pgsql') ? $val : strtolower($val);
+                    $val = ($driver === 'pgsql') ? $val : strtolower($val);
 
                     if ($driver !== 'pgsql') {
                         $q->whereRaw("LOWER($col) $operator ?", [$val], $bool);
@@ -57,7 +57,7 @@ trait Helpers
 
     protected function resolveFilterMode(string $column): string
     {
-        $modes   = config('query-filters.filter_modes', []);
+        $modes = config('query-filters.filter_modes', []);
         $default = config('query-filters.default_match', 'exact');
 
         // 1. Direct exact match
@@ -72,7 +72,7 @@ trait Helpers
             }
 
             // Convert dot-wildcards to regex
-            $regex = '/^' . str_replace(['\*', '\.'], ['.*', '\.'], preg_quote($pattern, '/')) . '$/i';
+            $regex = '/^'.str_replace(['\*', '\.'], ['.*', '\.'], preg_quote($pattern, '/')).'$/i';
 
             if (preg_match($regex, $column)) {
                 return $mode;
@@ -82,5 +82,4 @@ trait Helpers
         // 3. Fallback
         return $default;
     }
-
 }

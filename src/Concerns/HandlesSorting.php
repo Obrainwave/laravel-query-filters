@@ -1,7 +1,6 @@
 <?php
-namespace Obrainwave\LaravelQueryFilters\Concerns;
 
-use Illuminate\Support\Str;
+namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesSorting
 {
@@ -13,12 +12,12 @@ trait HandlesSorting
             return;
         }
 
-        $sorts   = explode(',', $sortParam);
+        $sorts = explode(',', $sortParam);
         $allowed = config('query-filters.sorting.allowed_columns', []);
 
         foreach ($sorts as $sort) {
             $direction = \Illuminate\Support\Str::startsWith($sort, '-') ? 'desc' : 'asc';
-            $column    = ltrim($sort, '-');
+            $column = ltrim($sort, '-');
 
             // If allowed columns are defined, enforce them
             if (! empty($allowed) && ! in_array($column, $allowed, true)) {
@@ -28,5 +27,4 @@ trait HandlesSorting
             $this->builder->orderBy($column, $direction);
         }
     }
-
 }

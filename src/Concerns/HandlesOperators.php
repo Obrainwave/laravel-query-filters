@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesOperators
@@ -41,5 +42,4 @@ trait HandlesOperators
             }
         }
     }
-
 }

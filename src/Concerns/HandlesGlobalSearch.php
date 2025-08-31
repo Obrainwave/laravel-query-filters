@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesGlobalSearch
@@ -20,7 +21,7 @@ trait HandlesGlobalSearch
 
     protected function applyGlobalSearch(string $term): void
     {
-        $term  = strtolower($term);
+        $term = strtolower($term);
         $model = $this->builder->getModel();
 
         if ($model && method_exists($model, 'getGlobalSearchColumns')) {
