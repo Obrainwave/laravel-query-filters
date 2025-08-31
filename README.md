@@ -13,7 +13,7 @@ composer require obrainwave/laravel-query-filters
 Publish the config (optional):
 
 ```bash
-php artisan vendor:publish --provider="Obrainwave\LaravelQueryFilters\LaravelQueryFiltersServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Obrainwave\LaravelQueryFilters\LaravelQueryFiltersServiceProvider" --tag="query-filters-config"
 ```
 
 ---
