@@ -94,13 +94,8 @@ return [
     |   Config fallback if none specified
     |
     */
-<<<<<<< HEAD
-    'pagination'      => [
-        'per_page'     => 1,   // default items per page
-=======
     'pagination' => [
         'per_page' => 1,   // default items per page
->>>>>>> 77135ce66352db8a8055e8d1eb34d75fa04a8ed4
         'max_per_page' => 100, // maximum items allowed per page
     ],
 
@@ -118,15 +113,9 @@ return [
     |   'allowed_columns' => ['name', 'created_at']
     |
     */
-<<<<<<< HEAD
     'sorting'         => [
         'allowed_columns' => [],   // empty = all allowed
         'default'         => null, // e.g., 'created_at' or '-created_at'
-=======
-    'sorting' => [
-        'allowed_columns' => [], // empty = all allowed
-        'default' => null, // e.g., 'created_at' or '-created_at'
->>>>>>> 77135ce66352db8a8055e8d1eb34d75fa04a8ed4
     ],
 
     /*
