@@ -20,7 +20,7 @@ class LaravelQueryFiltersServiceProvider extends PackageServiceProvider
     {
         // Bind your core service into the container
         $this->app->singleton('query-filters', function () {
-            return new QueryFiltersManager();
+            return new QueryFiltersManager;
         });
     }
 }

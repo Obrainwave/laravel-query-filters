@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,6 +9,7 @@ use Obrainwave\LaravelQueryFilters\Traits\Helpers;
 trait HandlesRelationships
 {
     use Helpers;
+
     /**
      * Apply nested relationship filters using dot notation.
      * Supports:
@@ -22,11 +24,11 @@ trait HandlesRelationships
                 continue;
             }
 
-            $isOr     = Str::startsWith($key, 'or:');
+            $isOr = Str::startsWith($key, 'or:');
             $cleanKey = $isOr ? Str::after($key, 'or:') : $key;
 
-            $segments  = explode('.', $cleanKey);
-            $column    = array_pop($segments);
+            $segments = explode('.', $cleanKey);
+            $column = array_pop($segments);
             $relations = implode('.', $segments);
 
             if (empty($relations)) {
@@ -57,6 +59,7 @@ trait HandlesRelationships
     protected function isOperatorArray(array $value): bool
     {
         $operators = ['gt', 'lt', 'gte', 'lte', 'between', 'neq', 'like', 'in', 'not_in'];
+
         return count($value) === 1 && in_array(strtolower(array_key_first($value)), $operators, true);
     }
 }

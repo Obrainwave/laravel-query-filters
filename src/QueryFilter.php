@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -15,21 +16,23 @@ use Obrainwave\LaravelQueryFilters\Traits\Helpers;
 abstract class QueryFilter
 {
     use HandlesAllowedFilters,
-    HandlesGlobalSearch,
-    HandlesRelationships,
-    HandlesSorting,
-    HandlesPagination,
-    HandlesOperators,
+        HandlesGlobalSearch,
+        HandlesOperators,
+        HandlesPagination,
+        HandlesRelationships,
+        HandlesSorting,
         Helpers;
 
     protected ?Builder $builder = null;
-    protected array $filters    = [];
+
+    protected array $filters = [];
+
     protected ?Request $request = null;
 
     /**
      * Accept request or array of filters
      */
-    public function __construct(Request | array | null $filters = null)
+    public function __construct(Request|array|null $filters = null)
     {
         if ($filters instanceof Request) {
             $this->request = $filters;
@@ -59,7 +62,7 @@ abstract class QueryFilter
      */
     protected function applyFilters(): void
     {
-        $allowed   = $this->getAllowedFilters();
+        $allowed = $this->getAllowedFilters();
         $globalKey = $this->getGlobalSearchKey();
 
         // Apply global search
@@ -81,10 +84,11 @@ abstract class QueryFilter
             if (str_contains($key, '.')) {
                 // Handle relationships here
                 $this->applyRelationFilters([$key => $value]);
+
                 continue;
             }
 
-            $method            = Str::camel($key);
+            $method = Str::camel($key);
             $normalizedAllowed = array_map('strtolower', $allowed);
 
             // If there’s a matching method and it’s allowed, call it
@@ -93,11 +97,13 @@ abstract class QueryFilter
                 (empty($allowed) || in_array(strtolower($method), $normalizedAllowed))
             ) {
                 $this->$method($value);
+
                 continue;
             }
 
             if (is_array($value)) {
                 $this->applyOperatorFilters($key, $value);
+
                 continue;
             }
 
@@ -118,13 +124,14 @@ abstract class QueryFilter
         // If the underlying query builder has the method, forward the call
         if (method_exists($this->builder, $method)) {
             $result = $this->builder->$method(...$args);
+
             // If the builder returned itself, allow fluent chaining
             return $result === $this->builder ? $this : $result;
         }
 
         // Otherwise treat it as a column filter
         $column = $method;
-        $value  = $args[0] ?? null;
+        $value = $args[0] ?? null;
 
         if ($value !== null) {
             $this->applyCaseInsensitive($column, $value);
@@ -132,5 +139,4 @@ abstract class QueryFilter
 
         return $this;
     }
-
 }
