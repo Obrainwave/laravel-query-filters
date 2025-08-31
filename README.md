@@ -64,7 +64,24 @@ return [
 
 ## Basic Usage
 
-You can filter Eloquent models directly using the `filter()` scope. You can use all laravel 
+You can filter Eloquent models directly using the `filter()` scope. 
+
+To use the query filters in your Laravel models, you must add the Filterable trait to the model. For example:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+use Obrainwave\LaravelQueryFilters\Filterable;
+
+class User extends Model
+{
+    use Filterable;
+
+    // Optional: define allowed columns in the model
+    // protected $allowedFilters = ['name', 'email'];
+}
+```
+
+Once the trait is added, you can call the filter() method on your model statically:
 
 ```php
 use App\Models\User;
@@ -73,8 +90,11 @@ $users = User::filter([
     'status' => 'active',
     'role' => 'admin',
     'q' => 'john', // Global search
-])->paginate(); // Supports per_page from request or config
+])->get(); // or ->first()
 ```
+
+* Without Filterable, filter() won’t exist on your model.
+* You can optionally define $allowedFilters in the model or rely on the config for auto-generated filters.
 
 And also supports laravel paginate and simplePaginate
 
