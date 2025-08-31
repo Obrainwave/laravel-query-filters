@@ -94,7 +94,22 @@ $users = User::filter([
 ```
 
 * Without Filterable, filter() won’t exist on your model.
-* You can optionally define $allowedFilters in the model or rely on the config for auto-generated filters.
+* You can optionally define $allowedFilters in the model or rely on the config for auto-generated filters. If your $allowedFilters is protected, you have to define a public get method to access it. For example:
+
+```php
+    protected array $allowedFilters = ['status', 'name', 'role'];
+
+    public function getAllowedFilters(): array
+    {
+        return $this->allowedFilters;
+    }
+```
+
+If you know what you are doing, you can probably just leave $allowedFilters as public property
+
+```php
+protected array $allowedFilters = ['status', 'name', 'role'];
+```
 
 And also supports laravel paginate and simplePaginate
 
