@@ -49,16 +49,16 @@ return [
     | Allowed Filters
     |--------------------------------------------------------------------------
     |
-    | By default, ['*'] means all columns are allowed to be filtered. 
-    | 
+    | By default, ['*'] means all columns are allowed to be filtered.
+    |
     | - To restrict filtering, define a list of allowed columns:
     |   ['name', 'email', 'status']
     |
-    | - You can also override this in individual models by 
+    | - You can also override this in individual models by
     |   defining a public $allowedFilters = ['...'] property.
     |
     */
-    'allowed_filters'      => ['*'],
+    'allowed_filters' => ['*'],
 
     /*
     |--------------------------------------------------------------------------
@@ -114,8 +114,8 @@ return [
     |   Config fallback if none specified
     |
     */
-    'pagination'           => [
-        'per_page'     => 10,  // default items per page
+    'pagination' => [
+        'per_page' => 10,  // default items per page
         'max_per_page' => 100, // maximum items allowed per page
     ],
 
