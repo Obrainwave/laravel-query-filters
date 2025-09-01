@@ -20,7 +20,7 @@ return [
     | You can also override per model via $globalSearchKey property.
     |
     */
-    'global_key'           => 'q',
+    'global_key' => 'q',
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +58,16 @@ return [
     |   defining a public $allowedFilters = ['...'] property.
     |
     */
+<<<<<<< HEAD
     'allowed_filters'      => ['*'],
+=======
+    'allowed_filters' => [
+        // 'status',
+        // 'role',
+        // 'email',
+        // 'created_at',
+    ],
+>>>>>>> a047b0140be224c9fd3cec5da35f95c29930c5e7
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +84,7 @@ return [
     |   /users?name=John&mode=like => partial match if mode is changed
     |
     */
-    'default_match'        => 'exact',
+    'default_match' => 'exact',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +104,7 @@ return [
     |   'user.*' => 'like'         // wildcard on all user columns
     |
     */
-    'filter_modes'         => [
+    'filter_modes' => [
         // 'email'    => 'strict',
         // 'name'     => 'like',
         // 'user.*'   => 'like',
@@ -114,8 +123,13 @@ return [
     |   Config fallback if none specified
     |
     */
+<<<<<<< HEAD
     'pagination'           => [
         'per_page'     => 10,  // default items per page
+=======
+    'pagination' => [
+        'per_page' => 10,   // default items per page
+>>>>>>> a047b0140be224c9fd3cec5da35f95c29930c5e7
         'max_per_page' => 100, // maximum items allowed per page
     ],
 
@@ -133,9 +147,9 @@ return [
     |   'allowed_columns' => ['name', 'created_at']
     |
     */
-    'sorting'              => [
+    'sorting' => [
         'allowed_columns' => [],   // empty = all allowed
-        'default'         => null, // e.g., 'created_at' or '-created_at'
+        'default' => null, // e.g., 'created_at' or '-created_at'
     ],
 
     /*
@@ -155,7 +169,7 @@ return [
     | Disable by setting 'enabled' => false
     |
     */
-    'operators'            => [
+    'operators' => [
         'enabled' => true,
     ],
 

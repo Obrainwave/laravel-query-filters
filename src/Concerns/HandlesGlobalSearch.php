@@ -1,4 +1,5 @@
 <?php
+
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesGlobalSearch
@@ -20,8 +21,8 @@ trait HandlesGlobalSearch
 
     protected function applyGlobalSearch(string $term): void
     {
-        $term       = strtolower($term);
-        $model      = $this->builder->getModel();
+        $term = strtolower($term);
+        $model = $this->builder->getModel();
         $allColumns = \Schema::getColumnListing($model->getTable());
 
         if ($model && method_exists($model, 'getGlobalSearchColumns')) {
@@ -38,7 +39,7 @@ trait HandlesGlobalSearch
                 ['name', 'title', 'content', 'body', 'message', 'subject'],
                 $allColumns
             );
-           
+
         }
 
         $strict = config('queryfilters.strict_global_search', false);
@@ -62,5 +63,4 @@ trait HandlesGlobalSearch
             });
         }
     }
-
 }
