@@ -46,21 +46,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Allowed Filters
+    | Allowed Filters
     |--------------------------------------------------------------------------
     |
-    | Columns that can be filtered globally. Only listed keys are allowed.
-    | Example usage in URL:
+    | By default, ['*'] means all columns are allowed to be filtered. 
+    | 
+    | - To restrict filtering, define a list of allowed columns:
+    |   ['name', 'email', 'status']
     |
-    |   /users?status=active&role=admin
+    | - You can also override this in individual models by 
+    |   defining a public $allowedFilters = ['...'] property.
     |
     */
-    'allowed_filters'      => [
-        // 'status',
-        // 'role',
-        // 'email',
-        // 'created_at',
-    ],
+    'allowed_filters'      => ['*'],
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +115,7 @@ return [
     |
     */
     'pagination'           => [
-        'per_page'     => 10,   // default items per page
+        'per_page'     => 10,  // default items per page
         'max_per_page' => 100, // maximum items allowed per page
     ],
 

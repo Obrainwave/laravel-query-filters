@@ -76,7 +76,7 @@ class User extends Model
 }
 ```
 
-Once the trait is added, you can call the filter() method on your model statically:
+Once the trait is added, you can call the `filter()` method on your model statically:
 
 ```php
 use App\Models\User;
@@ -88,8 +88,8 @@ $users = User::filter([
 ])->get(); // or ->first()
 ```
 
-* Without Filterable, filter() won’t exist on your model.
-* You can optionally define $allowedFilters in the model or rely on the config for auto-generated filters. If your $allowedFilters is protected, you have to define a public get method to access it. For example:
+* Without Filterable, `filter()` won’t exist on your model.
+* You can optionally define $allowedFilters in the model or rely on the config for auto-generated filters. If your `$allowedFilters` is protected, you have to define a public get method to access it. For example:
 
 ```php
     protected array $allowedFilters = ['status', 'name', 'role'];
@@ -100,10 +100,16 @@ $users = User::filter([
     }
 ```
 
-If you know what you are doing, you can probably just leave $allowedFilters as public property
+If you know what you are doing, you can probably just leave `$allowedFilters` as public property
 
 ```php
 public array $allowedFilters = ['status', 'name', 'role'];
+```
+
+Or you can actually allow all table columns to be filtered by setting the default value in `config/query-filters.php`
+
+```bash
+'allowed_filters'      => ['*']
 ```
 
 And also supports laravel paginate and simplePaginate
@@ -124,7 +130,7 @@ Filters also work directly from URL query parameters:
 ```
 /users?status=active&role=admin&q=john&per_page=5&sort=-created_at
 ```
-Which you can pass directly from your request helper or injected Illuminate\Http\Request
+Which you can pass directly from your request helper or injected `Illuminate\Http\Request`
 
 ```php
 use App\Models\User;
@@ -143,10 +149,10 @@ $users = User::filter($filters)->paginate(15);
 $users = User::filter($filters)->simplePaginate(10);
 $user  = User::filter($filters)->first();
 ```
-* ->get() → retrieves all matching records.
-* ->paginate() → retrieves paginated results with page links.
-* ->simplePaginate() → retrieves simpler pagination without total count.
-* ->first() → retrieves the first matching record.
+* `->get()` → retrieves all matching records.
+* `->paginate()` → retrieves paginated results with page links.
+* `->simplePaginate()` → retrieves simpler pagination without total count.
+* `->first()` → retrieves the first matching record.
 
 This allows you to combine filtering with any Laravel query workflow seamlessly.
 
