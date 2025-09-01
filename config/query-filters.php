@@ -58,16 +58,7 @@ return [
     |   defining a public $allowedFilters = ['...'] property.
     |
     */
-<<<<<<< HEAD
     'allowed_filters'      => ['*'],
-=======
-    'allowed_filters' => [
-        // 'status',
-        // 'role',
-        // 'email',
-        // 'created_at',
-    ],
->>>>>>> a047b0140be224c9fd3cec5da35f95c29930c5e7
 
     /*
     |--------------------------------------------------------------------------
@@ -123,13 +114,8 @@ return [
     |   Config fallback if none specified
     |
     */
-<<<<<<< HEAD
     'pagination'           => [
         'per_page'     => 10,  // default items per page
-=======
-    'pagination' => [
-        'per_page' => 10,   // default items per page
->>>>>>> a047b0140be224c9fd3cec5da35f95c29930c5e7
         'max_per_page' => 100, // maximum items allowed per page
     ],
 
