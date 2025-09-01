@@ -1,5 +1,4 @@
 <?php
-
 namespace Obrainwave\LaravelQueryFilters\Concerns;
 
 trait HandlesGlobalSearch
@@ -21,23 +20,47 @@ trait HandlesGlobalSearch
 
     protected function applyGlobalSearch(string $term): void
     {
-        $term = strtolower($term);
-        $model = $this->builder->getModel();
+        $term       = strtolower($term);
+        $model      = $this->builder->getModel();
+        $allColumns = \Schema::getColumnListing($model->getTable());
 
         if ($model && method_exists($model, 'getGlobalSearchColumns')) {
             $columns = $model->getGlobalSearchColumns();
-        } elseif ($model && property_exists($model, 'globalSearchColumns') &&
+        } elseif (
+            $model &&
+            property_exists($model, 'globalSearchColumns') &&
             is_array($model->globalSearchColumns) &&
-            ! empty($model->globalSearchColumns)) {
+            ! empty($model->globalSearchColumns)
+        ) {
             $columns = $model->globalSearchColumns;
         } else {
-            $columns = ['name', 'title', 'content', 'body', 'message', 'subject'];
+            $columns = array_intersect(
+                ['name', 'title', 'content', 'body', 'message', 'subject'],
+                $allColumns
+            );
+           
         }
 
-        $this->builder->where(function ($query) use ($term, $columns) {
-            foreach ($columns as $column) {
-                $query->orWhereRaw("LOWER({$column}) LIKE ?", ["%{$term}%"]);
+        $strict = config('queryfilters.strict_global_search', false);
+
+        $validColumns = [];
+        foreach ($columns as $column) {
+            if (\Schema::hasColumn($model->getTable(), $column)) {
+                $validColumns[] = $column;
+            } elseif ($strict) {
+                throw new \InvalidArgumentException(
+                    "Global search column '{$column}' does not exist on table '{$model->getTable()}'"
+                );
             }
-        });
+        }
+
+        if (! empty($validColumns)) {
+            $this->builder->where(function ($query) use ($term, $validColumns) {
+                foreach ($validColumns as $column) {
+                    $query->orWhereRaw("LOWER({$column}) LIKE ?", ["%{$term}%"]);
+                }
+            });
+        }
     }
+
 }

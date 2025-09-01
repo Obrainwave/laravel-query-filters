@@ -13,7 +13,7 @@ composer require obrainwave/laravel-query-filters
 Publish the config (optional):
 
 ```bash
-php artisan vendor:publish --provider="Obrainwave\LaravelQueryFilters\LaravelQueryFiltersServiceProvider" --tag="query-filters-config"
+php artisan vendor:publish --tag=query-filters-config
 ```
 
 ---
@@ -27,12 +27,7 @@ return [
 
     'global_key' => 'q', // Query parameter key for global search
 
-    'allowed_filters' => [
-        'status',
-        'role',
-        'email',
-        'created_at',
-    ],
+    'allowed_filters' => ['name', 'role'],
 
     'default_match' => 'exact', // exact, like, strict
 
@@ -44,7 +39,7 @@ return [
     ],
 
     'pagination' => [
-        'per_page' => 15,
+        'per_page' => 10,
         'max_per_page' => 100,
     ],
 

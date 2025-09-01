@@ -20,7 +20,29 @@ return [
     | You can also override per model via $globalSearchKey property.
     |
     */
-    'global_key' => 'q',
+    'global_key'           => 'q',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Strict Global Search
+    |--------------------------------------------------------------------------
+    |
+    | This option controls how the package handles global search columns.
+    |
+    | - When set to false (default), the filter will silently ignore any
+    |   invalid or non-existent columns. This is useful when you want the
+    |   search to "just work" without throwing errors.
+    |
+    | - When set to true, the filter will throw an exception if you define
+    |   a global search column that does not exist on the model’s table.
+    |   (Fallback columns like name, title, body, etc. are automatically
+    |   validated against the schema and will never throw errors.)
+    |
+    | This gives you the flexibility to decide between convenience and
+    | strict validation depending on your project’s needs.
+    |
+    */
+    'strict_global_search' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -33,11 +55,11 @@ return [
     |   /users?status=active&role=admin
     |
     */
-    'allowed_filters' => [
-        'status',
-        'role',
-        'email',
-        'created_at',
+    'allowed_filters'      => [
+        // 'status',
+        // 'role',
+        // 'email',
+        // 'created_at',
     ],
 
     /*
@@ -55,7 +77,7 @@ return [
     |   /users?name=John&mode=like => partial match if mode is changed
     |
     */
-    'default_match' => 'exact',
+    'default_match'        => 'exact',
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +97,7 @@ return [
     |   'user.*' => 'like'         // wildcard on all user columns
     |
     */
-    'filter_modes' => [
+    'filter_modes'         => [
         // 'email'    => 'strict',
         // 'name'     => 'like',
         // 'user.*'   => 'like',
@@ -94,8 +116,8 @@ return [
     |   Config fallback if none specified
     |
     */
-    'pagination' => [
-        'per_page' => 1,   // default items per page
+    'pagination'           => [
+        'per_page'     => 10,   // default items per page
         'max_per_page' => 100, // maximum items allowed per page
     ],
 
@@ -113,9 +135,9 @@ return [
     |   'allowed_columns' => ['name', 'created_at']
     |
     */
-    'sorting' => [
+    'sorting'              => [
         'allowed_columns' => [],   // empty = all allowed
-        'default' => null, // e.g., 'created_at' or '-created_at'
+        'default'         => null, // e.g., 'created_at' or '-created_at'
     ],
 
     /*
@@ -135,7 +157,7 @@ return [
     | Disable by setting 'enabled' => false
     |
     */
-    'operators' => [
+    'operators'            => [
         'enabled' => true,
     ],
 
